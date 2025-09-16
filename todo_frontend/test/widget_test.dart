@@ -1,18 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:todo_frontend/main.dart';
 
 void main() {
-  testWidgets('App generation message displayed', (WidgetTester tester) async {
+  testWidgets('App boots without crashing', (tester) async {
     await tester.pumpWidget(const MyApp());
-
-    expect(find.text('todo_frontend App is being generated...'), findsOneWidget);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
-  });
-
-  testWidgets('App bar has correct title', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
-
-    expect(find.text('todo_frontend'), findsOneWidget);
+    // Initial route depends on auth state; just ensure a frame is built.
+    await tester.pump(const Duration(milliseconds: 100));
+    expect(find.byType(MyApp), findsOneWidget);
   });
 }
